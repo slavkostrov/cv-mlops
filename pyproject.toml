@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "cv-mlops"
+version = "0.0.1"
+description = "Computer vision classification (Dogs VS Cats) with MLops features usage"
+authors = ["Vyacheslav Kostrov <slavkostrov@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
