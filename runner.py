@@ -1,4 +1,4 @@
-"""CLI runner for train and infer proccess."""
+"""CLI runner for train and infer proccesses."""
 import fire
 
 from src.infer import infer  # noqa: F401
