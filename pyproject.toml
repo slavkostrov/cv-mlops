@@ -21,6 +21,13 @@ isort = "^5.13.1"
 flake8 = "^6.1.0"
 ruff = "^0.1.7"
 
+
+[tool.poetry.group.research.dependencies]
+ipykernel = "^6.27.1"
+matplotlib = "^3.8.2"
+seaborn = "^0.13.0"
+tqdm = "^4.66.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
