@@ -2037,6 +2037,17 @@ dynamo = ["jinja2"]
 opt-einsum = ["opt-einsum (>=3.3)"]
 
 [[package]]
+name = "torch-summary"
+version = "1.4.5"
+description = "Model summary in PyTorch, based off of the original torchsummary."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "torch_summary-1.4.5-py3-none-any.whl", hash = "sha256:6127efb631f34ba8cbd28e92e8f7ddc2903ea0cbc44c80f15b7363b8f558cd8c"},
+    {file = "torch_summary-1.4.5.tar.gz", hash = "sha256:44eac21777dbbda7b8404d57a43c09d83fd9c93d0c1f0c960b5083ccb24d6d21"},
+]
+
+[[package]]
 name = "torchvision"
 version = "0.16.1"
 description = "image and video datasets and models for torch deep learning"
@@ -2226,4 +2237,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "b9c1b11364146ce46dee651d300134520e4843a98fea0f8e9af4377661b939fe"
+content-hash = "6e58949e0052eb84f6230bf70550844102d2fea614d90f2613343a216c4b9236"

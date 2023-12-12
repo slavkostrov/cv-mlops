@@ -27,6 +27,7 @@ ipykernel = "^6.27.1"
 matplotlib = "^3.8.2"
 seaborn = "^0.13.0"
 tqdm = "^4.66.1"
+torch-summary = "^1.4.5"
 
 [build-system]
 requires = ["poetry-core"]
