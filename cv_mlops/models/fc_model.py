@@ -69,8 +69,8 @@ class FCModel(BaseModel):
         f1_score = self.f1_score(predictions, y_batch)
 
         self.log("train_loss", loss, on_epoch=True)
-        self.log("accuracy", accuracy, on_epoch=True, prog_bar=True)
-        self.log("f1_score", f1_score, on_epoch=True)
+        self.log("train_accuracy", accuracy, on_epoch=True, prog_bar=True)
+        self.log("train_f1", f1_score, on_epoch=True)
         # TODO: ADD logs
         return {"loss": loss}
 
@@ -85,8 +85,8 @@ class FCModel(BaseModel):
         f1_score = self.f1_score(predictions, y_batch)
 
         self.log("val_loss", loss, on_epoch=True)
-        self.log("accuracy", accuracy, on_epoch=True, prog_bar=True)
-        self.log("f1_score", f1_score, on_epoch=True)
+        self.log("val_accuracy", accuracy, on_epoch=True, prog_bar=True)
+        self.log("val_f1", f1_score, on_epoch=True)
         return {"val_loss": loss}
 
     def configure_optimizers(self):
