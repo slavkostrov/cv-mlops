@@ -1,0 +1,4 @@
+name: torch.optim.lr_scheduler.ExponentialLR
+enable: true
+params:
+  gamma: 0.9

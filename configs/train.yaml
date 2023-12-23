@@ -3,10 +3,10 @@ defaults:
   - model: fc
   - optimizer: adam
   - mlflow: default
+  - tensorboard: default
+  - callbacks: default
+  - trainer: default
   - _self_
 params:
   exp_name: ${model.name}
-  models_folder: ${hydra.runtime.cwd}/models/
   model_filename: model
-  epoch_num: 3
-  device: cpu

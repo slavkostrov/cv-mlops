@@ -1,3 +1,5 @@
+defaults:
+  - scheduler: default
 name: torch.optim.Adam
 params:
   lr: 0.0003

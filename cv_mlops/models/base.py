@@ -1,6 +1,6 @@
-import torch
+import lightning as L
 
 
-class BaseModel(torch.nn.Module):
+class BaseModel(L.LightningModule):
     def get_transformer(self):
         return None
