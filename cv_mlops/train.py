@@ -2,6 +2,7 @@
 import logging
 import logging.config
 import pathlib
+import subprocess
 
 import lightning as L
 import lightning.pytorch as pl
@@ -47,13 +48,16 @@ def train(
     config_path = config_path or "../configs"
     overrides = prepare_overrides(config_override_params)
     with initialize(version_base=None, config_path=config_path):
-        # Load connfig
+        # Load config
         # we need return_hydra_config=True for resolve hydra.runtime.cwd etc
         cfg: DictConfig = compose(config_name=config_name, overrides=overrides, return_hydra_config=True)
-        LOGGER.info("Current_config:\n%s", OmegaConf.to_yaml(cfg))
+        LOGGER.info("Current training config:\n%s", OmegaConf.to_yaml(cfg))
+
+        # Pull train data from DVC
+        subprocess.run(["dvc", "pull"], check=True)
 
         # Create model
-        model = load_object_from_path(
+        model: L.LightningModule = load_object_from_path(
             path=cfg.model.name,
             optimizer_config=cfg.optimizer,
             **cfg.model.params,
@@ -63,7 +67,7 @@ def train(
         # Create data module
         train_data_path = pathlib.Path(cfg.data.path) / cfg.data.folders.train
         validation_data_path = pathlib.Path(cfg.data.path) / cfg.data.folders.validation
-        datamodule = ImageDataModule(
+        datamodule: L.LightningDataModule = ImageDataModule(
             train_data_path=train_data_path,
             validation_data_path=validation_data_path,
             transformer=model.get_transformer(),
@@ -102,3 +106,10 @@ def train(
                 }
             )
             trainer.fit(model=model, datamodule=datamodule)
+
+        # TODO: fix
+        final_model_path = (
+            pathlib.Path(cfg.callbacks.model_checkpoint.params.dirpath) / f"{cfg.params.model_filename}.ckpt"
+        )
+        trainer.save_checkpoint(final_model_path)
+        LOGGER.info("Model saved to %s.", final_model_path)

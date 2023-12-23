@@ -45,7 +45,7 @@ class FCModel(BaseModel):
         optimizer_config: dict | None = None,
     ) -> None:
         super().__init__()
-
+        self.save_hyperparameters()
         self.model = _FCModel(
             embedding_size=embedding_size,
             size_h=size_h,
@@ -108,12 +108,10 @@ class FCModel(BaseModel):
         return optimizer
 
     def forward(self, x):
-        x = self.flatten(x)
-        x = self.dropout1(self.relu1(self.fc1(x)))
-        x = self.dropout2(self.relu2(self.fc2(x)))
-
-        x = self.fc3(x)
-        return x
+        if len(x) == 2:
+            # TODO: fix
+            x = x[0]
+        return self.model(x)
 
     def get_transformer(self):
         transformer = transforms.Compose(

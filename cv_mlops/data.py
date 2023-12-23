@@ -60,7 +60,7 @@ class ImageDataModule(L.LightningDataModule):
             num_workers=self.num_workers,
         )
 
-    def test_dataloader(self):
+    def predict_dataloader(self):
         return torch.utils.data.DataLoader(
             self.test_dataset,
             batch_size=self.batch_size,

@@ -1,0 +1,7 @@
+defaults:
+  - data: test_data
+  - model: fc
+  - _self_
+params:
+  output_path: test.csv
+  checkpoint_path: ${hydra.runtime.cwd}/models/model.ckpt

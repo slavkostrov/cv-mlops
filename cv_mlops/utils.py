@@ -14,8 +14,10 @@ def get_current_commit() -> str:
     return subprocess.check_output(["git", "rev-parse", "--short", "HEAD"]).decode("ascii").strip()
 
 
-def load_object_from_path(path: str, *args, **kwargs):
+def load_object_from_path(path: str, return_cls: bool = False, *args, **kwargs):
     module_name, class_name = path.rsplit(".", maxsplit=1)
     target_class = getattr(import_module(module_name), class_name)
+    if return_cls:
+        return target_class
     obj = target_class(*args, **kwargs)
     return obj
