@@ -1,6 +1,7 @@
 """Module with model's train."""
 import logging
 import logging.config
+import os
 import pathlib
 import time
 
@@ -84,7 +85,7 @@ def train_model(  # noqa: D103
     epoch_num: int,
     loss_function: torch.nn.Module,
     device: str | torch.device | None = None,
-    ckpt_name: str | pathlib.Path = None,
+    save_path: str | pathlib.Path = None,
     log_mlflow: bool = False,
 ):
     if device is None:
@@ -142,10 +143,10 @@ def train_model(  # noqa: D103
         print("Epoch {} of {} took {:.3f}s".format(epoch + 1, epoch_num, time.time() - start_time))
 
         val_accuracy_value = validation_metric_results["accuracy"]
-        if val_accuracy_value > top_val_accuracy and ckpt_name is not None:
+        if val_accuracy_value > top_val_accuracy and save_path is not None:
             top_val_accuracy = val_accuracy_value
 
-            with open(ckpt_name, "wb") as f:
+            with open(f"{save_path}.ckpt", "wb") as f:
                 torch.save(model, f)
 
     if log_mlflow:
@@ -201,11 +202,11 @@ def train(
         model = load_object_from_path(path=cfg.model.name, **cfg.model.params)
         dataloader_params = {
             "transformer": model.get_transformer(),
-            "batch_size": cfg.params.batch_size,
+            **cfg.data.loader.params,
         }
 
-        train_data_path = pathlib.Path(cfg.data.path) / cfg.data.train_folder
-        validation_data_path = pathlib.Path(cfg.data.path) / cfg.data.validation_folder
+        train_data_path = pathlib.Path(cfg.data.path) / cfg.data.folders.train
+        validation_data_path = pathlib.Path(cfg.data.path) / cfg.data.folders.validation
 
         train_dataloader = get_dataloader(path=train_data_path, shuffle=True, **dataloader_params)
         validation_dataloader = get_dataloader(path=validation_data_path, shuffle=False, **dataloader_params)
@@ -214,7 +215,7 @@ def train(
 
         # TODO: fix uri
         mlflow.set_tracking_uri(uri=cfg.mlflow.tracking_uri)
-        mlflow.set_experiment(cfg.model.name)
+        mlflow.set_experiment(cfg.params.exp_name)
         with mlflow.start_run(run_name="TESTRUN"):
             # TODO: add logging of hydra configs
             mlflow.log_params(
@@ -225,6 +226,9 @@ def train(
             )
 
             loss_function = torch.nn.CrossEntropyLoss()
+
+            os.makedirs(cfg.params.models_folder, exist_ok=True)
+            model_save_path = pathlib.Path(cfg.params.models_folder) / cfg.params.model_filename
             model, opt = train_model(
                 model=model,
                 train_batch_generator=train_dataloader,
@@ -233,6 +237,6 @@ def train(
                 loss_function=loss_function,
                 epoch_num=cfg.params.epoch_num,
                 device=cfg.params.device,
-                ckpt_name="test.ckpt",
+                save_path=model_save_path,
                 log_mlflow=True,
             )

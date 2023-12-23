@@ -5,7 +5,8 @@ defaults:
   - mlflow: default
   - _self_
 params:
-  batch_size: 256
+  exp_name: ${model.name}
+  models_folder: ${hydra.runtime.cwd}/models/
+  model_filename: model
   epoch_num: 3
-  lr: 0.0003
   device: cpu
