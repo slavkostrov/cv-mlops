@@ -1,0 +1,11 @@
+defaults:
+  - data: train_data
+  - model: fc
+  - optimizer: adam
+  - mlflow: default
+  - _self_
+params:
+  batch_size: 256
+  epoch_num: 3
+  lr: 0.0003
+  device: cpu

@@ -161,3 +161,6 @@ cython_debug/
 
 notebooks/data*
 data/data*
+mlartifacts/
+mlruns/
+*.ckpt

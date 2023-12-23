@@ -1,0 +1,4 @@
+path: ${hydra.runtime.cwd}/data/train
+
+train_folder: train_11k
+validation_folder: val
