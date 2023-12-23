@@ -57,3 +57,9 @@ force-exclude = true
 
 [tool.ruff.pydocstyle]
 convention = "google"
+
+[tool.isort]
+profile = 'black'
+
+[tool.black]
+line-length = 120
