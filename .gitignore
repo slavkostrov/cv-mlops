@@ -168,3 +168,4 @@ lightning_logs/
 /tensorboard/
 test.sh
 Dockerfile
+notebooks/
