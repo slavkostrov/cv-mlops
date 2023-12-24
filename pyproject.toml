@@ -37,7 +37,6 @@ pre-commit-hooks = "^4.5.0"
 [tool.poetry.group.research.dependencies]
 ipykernel = "^6.27.1"
 seaborn = "^0.13.0"
-tqdm = "^4.66.1"
 torch-summary = "^1.4.5"
 
 [build-system]
