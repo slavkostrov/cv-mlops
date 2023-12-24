@@ -4,7 +4,7 @@
     url = gdrive://1PRUo6x5rls8ZZNRk0634l-Rv6Qfq5A_f
 ['remote "s3_remote"']
     # remote for writing (not public)
-    url = s3://mlops-cats-dogs/dvc
+    url = s3://mlops-cats-dogs/dvc-data
     endpointurl = https://storage.yandexcloud.net/
     region = ru-central1
     # provide crerentials here
@@ -12,4 +12,4 @@
     # secret_access_key = ACCESS_KEY
 ['remote "s3http"']
     # http remote for public usage of S3 (read-only)
-    url = http://mlops-cats-dog.storage.yandexcloud.net/dvc
+    url = http://mlops-cats-dog.storage.yandexcloud.net/dvc-data
