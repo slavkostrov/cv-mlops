@@ -43,9 +43,9 @@ class ImageDataModule(L.LightningDataModule):
         self.transformer = transformer
 
     def setup(self, stage: str):
-        """Setup datasets for current stage (`fit` and `test` implemeted).
+        """Setup datasets for current stage (`fit` and `predict` implemeted).
 
-        Fit stage needs both train and val datasets. Test only needs test.
+        Fit stage needs both train and val datasets. Predict only needs test.
         """
         if stage == "fit":
             if self.train_data_path is None or self.validation_data_path is None:
@@ -55,7 +55,7 @@ class ImageDataModule(L.LightningDataModule):
             self.validation_dataset = torchvision.datasets.ImageFolder(
                 self.validation_data_path, transform=self.transformer
             )
-        elif stage == "test":
+        elif stage == "predict":
             if self.test_data_path is None:
                 raise RuntimeError("Test set must be given for test stage.")
             self.test_dataset = torchvision.datasets.ImageFolder(self.test_data_path, transform=self.transformer)
