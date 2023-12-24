@@ -1,5 +1,5 @@
 [core]
-    remote = s3_remote
+    remote = s3http
 ['remote "myremote"']
     url = gdrive://1PRUo6x5rls8ZZNRk0634l-Rv6Qfq5A_f
 ['remote "s3_remote"']
