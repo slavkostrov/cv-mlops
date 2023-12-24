@@ -8,3 +8,6 @@
     url = s3://mlops-cats-dogs/
     endpointurl = https://storage.yandexcloud.net/
     region = ru-central1
+    # doesn't need it for read-only
+    access_key_id = KEY_ID
+    secret_access_key = ACCESS_KEY
