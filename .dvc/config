@@ -1,5 +1,10 @@
 [core]
-    remote = myremote
+    remote = s3_remote
 ['remote "myremote"']
+    # needs oauth
     url = gdrive://1PRUo6x5rls8ZZNRk0634l-Rv6Qfq5A_f
-    gdrive_acknowledge_abuse = true
+['remote "s3_remote"']
+    # public read-only
+    url = s3://mlops-cats-dogs/
+    endpointurl = https://storage.yandexcloud.net/
+    region = ru-central1
