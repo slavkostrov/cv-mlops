@@ -1,4 +1,4 @@
-tracking_uri: "http://127.0.0.1:8080"
+tracking_uri: "http://128.0.1.1:8080"
 autolog:
   enable: true
   params:
