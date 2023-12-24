@@ -51,6 +51,7 @@ def train(
         config_path: path to config (default None)
         **config_override_params: params for override config
     """
+    # TODO: maybe need to fix default config path (it is relative to runner (__file__))
     config_path = config_path or "../configs"
     overrides = prepare_overrides(config_override_params)
     with initialize(version_base=None, config_path=config_path):
