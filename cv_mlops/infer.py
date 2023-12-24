@@ -38,7 +38,7 @@ def infer(
         LOGGER.info("Current inference config:\n%s", OmegaConf.to_yaml(cfg))
 
         # Load data from DVC
-        subprocess.run(["dvc", "pull"], check=True)
+        subprocess.run(["dvc", "pull", "data/test"], check=True)
 
         # Load model from checkpoint (TODO: ONNX?)
         model_class: L.LightningModule = load_object_from_path(cfg.model.name, return_cls=True)

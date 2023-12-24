@@ -61,7 +61,7 @@ def train(
         LOGGER.info("Current training config:\n%s", OmegaConf.to_yaml(cfg))
 
         # Pull train data from DVC
-        subprocess.run(["dvc", "pull"], check=True)
+        subprocess.run(["dvc", "pull", "data/train"], check=True)
 
         # Create model
         model: L.LightningModule = load_object_from_path(
