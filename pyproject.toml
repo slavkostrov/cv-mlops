@@ -50,7 +50,7 @@ line-length = 120
 extend-select = [
     # "F", #  flake8 - included as default in select
     "I", #  isort
-    # "D", #  pydocstyle
+    "D", #  pydocstyle
     "B", #  flake-bugbear
     "Q"  #  flake-quotes
 ]

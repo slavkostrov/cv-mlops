@@ -166,3 +166,5 @@ mlruns/
 *.ckpt
 lightning_logs/
 /tensorboard/
+test.sh
+Dockerfile

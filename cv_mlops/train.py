@@ -3,6 +3,7 @@ import logging
 import logging.config
 import pathlib
 import subprocess
+from typing import NoReturn
 
 import lightning as L
 import lightning.pytorch as pl
@@ -19,7 +20,12 @@ LOGGER = logging.getLogger(__name__)
 LOGGER.setLevel(logging.INFO)
 
 
-def setup_callbacks(callbacks_cfg: DictConfig):
+def setup_callbacks(callbacks_cfg: DictConfig) -> list[L.Callback]:
+    """Create and setup lightning callbacks.
+
+    By default, create LearningRateMonitor, DeviceStatsMonitor and RichModelSummary.
+    Also model checkpointing can be enabled.
+    """
     callbacks = [
         pl.callbacks.LearningRateMonitor(logging_interval="step"),
         pl.callbacks.DeviceStatsMonitor(),
@@ -37,7 +43,7 @@ def train(
     config_name: str = "train",
     config_path: str | None = None,
     **config_override_params,
-):
+) -> NoReturn:
     """Train model with Hydra usage.
 
     Args:
@@ -101,13 +107,14 @@ def train(
         with mlflow.start_run(run_id=mlflow_logger.run_id):
             mlflow.log_params(
                 {
+                    # TODO: add something?
                     "cfg": cfg,
                     "commit_hash": get_current_commit(),
                 }
             )
             trainer.fit(model=model, datamodule=datamodule)
 
-        # TODO: fix
+        # TODO: fix, save not as checkpoint + save best model (based on validation) and not last
         final_model_path = (
             pathlib.Path(cfg.callbacks.model_checkpoint.params.dirpath) / f"{cfg.params.model_filename}.ckpt"
         )
