@@ -36,7 +36,7 @@ python commands.py train --trainer.params.max_epochs=5
 ```
 All parameters can be found in [configs](configs/).
 
-Repository use DVC for data versions control and model saving, in example we use simple GDrive remote, but it also cat be extended.
+Repository use DVC for data versions control and model saving, in example we use S3 remote (read-only), but it also cat be extended.
 
 For logging package use `lightning` logger (such as `TensorBoardLogger` and `MLFlowLogger`) and `MLflow` utils for logging experiments (se. [configs/mlflow](configs/mlflow)).
 
