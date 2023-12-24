@@ -140,7 +140,7 @@ class FCModel(BaseModel):
 
     def forward(self, x):
         """Forward step of model, need to predict."""
-        if isinstance(x, tuple) and len(x) == 2:
+        if isinstance(x, (tuple, list)) and len(x) == 2:
             # FIXME: sometimes both image and label provided
             # so we need to save only x
             x, _ = x
