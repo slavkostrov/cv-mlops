@@ -37,13 +37,13 @@ class _FCModel(nn.Module):
         self.dropout2 = nn.Dropout(0.1)
         self.fc3 = nn.Linear(embedding_size, num_classes)
 
-    def forward(self, x):
+    def forward(self, input_data):
         """Forward step of NN."""
-        x = self.flatten(x)
-        x = self.dropout1(self.relu1(self.fc1(x)))
-        x = self.dropout2(self.relu2(self.fc2(x)))
-        x = self.fc3(x)
-        return x
+        data = self.flatten(input_data)
+        data = self.dropout1(self.relu1(self.fc1(data)))
+        data = self.dropout2(self.relu2(self.fc2(data)))
+        predict = self.fc3(data)
+        return predict
 
 
 class FCModel(BaseModel):
@@ -138,13 +138,13 @@ class FCModel(BaseModel):
         # return only optimizer if sheduler not specified
         return optimizer
 
-    def forward(self, x):
+    def forward(self, input_data):
         """Forward step of model, need to predict."""
-        if isinstance(x, (tuple, list)) and len(x) == 2:
+        if isinstance(input_data, (tuple, list)) and len(input_data) == 2:
             # FIXME: sometimes both image and label provided
             # so we need to save only x
-            x, _ = x
-        return self.model(x)
+            input_data, _ = input_data
+        return self.model(input_data)
 
     def get_transformer(self):
         """Specific transforms for model. Resize, to tensor and normalization."""
