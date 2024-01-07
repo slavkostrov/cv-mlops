@@ -3,9 +3,11 @@ from torch import nn
 from torchmetrics import Accuracy, F1Score
 from torchvision import transforms
 
-from ..constants import IMAGE_MEAN, IMAGE_STD, SIZE_H, SIZE_W
 from ..utils import load_object_from_path
 from .base import BaseModel
+
+DEFAULT_IMAGE_MEAN = (0.485, 0.456, 0.406)
+DEFAULT_IMAGE_STD = (0.229, 0.224, 0.225)
 
 
 class _FCModel(nn.Module):
@@ -14,8 +16,8 @@ class _FCModel(nn.Module):
     def __init__(
         self,
         embedding_size: int,
-        size_h: int = SIZE_H,
-        size_w: int = SIZE_W,
+        size_h: int,
+        size_w: int,
         num_classes: int = 2,
     ) -> None:
         """Constructor of FC model.
@@ -52,8 +54,10 @@ class FCModel(BaseModel):
     def __init__(
         self,
         embedding_size: int,
-        size_h: int = SIZE_H,
-        size_w: int = SIZE_W,
+        size_h: int,
+        size_w: int,
+        image_mean: tuple[float] = DEFAULT_IMAGE_MEAN,
+        image_std: tuple[float] = DEFAULT_IMAGE_STD,
         num_classes: int = 2,
         optimizer_config: dict | None = None,
     ) -> None:
@@ -65,6 +69,8 @@ class FCModel(BaseModel):
             embedding_size: size of embedding on last layer
             size_h: height of images (default SIZE_H)
             size_w: width of images (default SIZE_W)
+            image_mean: mean for normalization
+            image_std: standard dev. for normalization
             num_classes: number of classes to predict (default 2)
             optimizer_config: specific config for optimizer (default None)
         """
@@ -75,6 +81,14 @@ class FCModel(BaseModel):
             size_h=size_h,
             size_w=size_w,
             num_classes=num_classes,
+        )
+
+        self.transformer = transforms.Compose(
+            [
+                transforms.Resize((size_h, size_w)),
+                transforms.ToTensor(),
+                transforms.Normalize(image_mean, image_std),
+            ]
         )
 
         task = "multiclass" if num_classes > 2 else "binary"
@@ -148,7 +162,4 @@ class FCModel(BaseModel):
 
     def get_transformer(self):
         """Specific transforms for model. Resize, to tensor and normalization."""
-        transformer = transforms.Compose(
-            [transforms.Resize((SIZE_H, SIZE_W)), transforms.ToTensor(), transforms.Normalize(IMAGE_MEAN, IMAGE_STD)]
-        )
-        return transformer
+        return self.transformer
