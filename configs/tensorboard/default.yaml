@@ -1,2 +1,2 @@
 uri: "128.0.1.2:8080"
-save_dir: ${hydra.runtime.cwd}/tensorboard/
+save_dir: ${hydra.runtime.cwd}/logs/
