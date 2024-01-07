@@ -143,7 +143,7 @@ class FCModel(BaseModel):
         if isinstance(input_data, (tuple, list)) and len(input_data) == 2:
             # FIXME: sometimes both image and label provided
             # so we need to save only x
-            input_data, _ = input_data
+            input_data, _label = input_data
         return self.model(input_data)
 
     def get_transformer(self):
